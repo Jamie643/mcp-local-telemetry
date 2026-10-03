@@ -69,5 +69,5 @@ def test_parse_error():
         text=True,
         timeout=15,
     )
-    (resp,) = [json.loads(l) for l in proc.stdout.splitlines() if l.strip()]
+    (resp,) = [json.loads(line) for line in proc.stdout.splitlines() if line.strip()]
     assert resp["error"]["code"] == -32700
