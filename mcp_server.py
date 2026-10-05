@@ -17,7 +17,7 @@ from typing import Any
 try:
     import psutil
 except ImportError:  # pragma: no cover - handled at tool-call time
-    psutil = None
+    psutil = None  # type: ignore[assignment]
 
 __version__ = "0.1.0"
 
@@ -107,7 +107,7 @@ def tool_get_system_metrics() -> dict[str, Any]:
 
 def tool_get_top_processes(limit: int = 5) -> list[dict[str, Any]]:
     _require_psutil()
-    procs = []
+    procs: list[dict[str, Any]] = []
     for p in psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent"]):
         try:
             info = p.info
@@ -126,6 +126,7 @@ def tool_get_top_processes(limit: int = 5) -> list[dict[str, Any]]:
 
 
 def _call_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+    payload: Any
     if name == "get_system_metrics":
         payload = tool_get_system_metrics()
     elif name == "get_top_processes":
@@ -187,8 +188,9 @@ def handle(req: dict[str, Any]) -> dict[str, Any] | None:
 
     if method in {"resources/list", "prompts/list"}:
         # Advertise empty sets so clients that probe don't error out.
-        key = method.split("/")[0]
-        return _ok(req_id, {key: []})
+        key: str = method.split("/")[0]
+        empty: dict[str, Any] = {key: []}
+        return _ok(req_id, empty)
 
     return _err(req_id, METHOD_NOT_FOUND, f"Method not found: {method}")
 
@@ -217,8 +219,9 @@ def main() -> int:
         if not req:
             continue
 
+        resp: dict[str, Any] | None
         if "__parse_error__" in req:
-            resp: dict[str, Any] | None = _err(None, PARSE_ERROR, req["__parse_error__"])
+            resp = _err(None, PARSE_ERROR, req["__parse_error__"])
         else:
             try:
                 resp = handle(req)
