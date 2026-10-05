@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mcp-local-telemetry"
-version = "0.1.0"
+version = "0.1.1"
 description = "A lightweight MCP server that feeds local system telemetry to AI agents."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -39,8 +39,15 @@ Homepage = "https://github.com/Jamie643/mcp-local-telemetry"
 Issues = "https://github.com/Jamie643/mcp-local-telemetry/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["."]
-include = ["mcp_server.py"]
+only-include = ["mcp_server.py"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "mcp_server.py",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]
 
 [tool.ruff]
 line-length = 100
