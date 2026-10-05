@@ -15,8 +15,7 @@ def _run(messages: list[dict]) -> list[dict]:
         timeout=15,
     )
     assert proc.returncode == 0, proc.stderr
-    return [json.loads(line) for line in proc.stdout.splitlines() if line.strip()]
-
+    (resp,) = [json.loads(line) for line in proc.stdout.splitlines() if line.strip()]
 
 def test_initialize_handshake():
     (resp,) = _run([{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}])
