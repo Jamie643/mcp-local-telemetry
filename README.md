@@ -1,5 +1,5 @@
 # mcp-local-telemetry
-
+[![CI](https://github.com/Jamie643/mcp-local-telemetry/actions/workflows/ci.yml/badge.svg)](https://github.com/Jamie643/mcp-local-telemetry/actions/workflows/ci.yml)
 A lightweight [Model Context Protocol](https://modelcontextprotocol.io) server that
 exposes local system telemetry (CPU, RAM, Disk, top processes) to MCP-aware AI
 agents — Claude Code, Cursor, ChatGPT Desktop, and any other MCP client.
