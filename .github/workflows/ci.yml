@@ -21,3 +21,4 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: ruff check .
       - run: pytest
+      - run: mypy mcp_server.py
