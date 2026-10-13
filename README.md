@@ -25,6 +25,64 @@ This server gives them a structured, protocol-standard way to ask.
 | `get_system_metrics` | CPU %, memory %, disk %, load average, boot time. |
 | `get_top_processes` | Top-N processes by CPU usage. |
 
+Or install from source:
+
+git clone https://github.com/Jamie643/mcp-local-telemetry.git
+cd mcp-local-telemetry
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -e .
+
+Claude Code
+
+claude mcp add local-telemetry -- mcp-local-telemetry
+
+Cursor / Claude Desktop (mcp.json)
+
+{
+  "mcpServers": {
+    "local-telemetry": {
+      "command": "mcp-local-telemetry"
+    }
+  }
+}
+
+Manual smoke test
+
+printf '%s\n' \
+  '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' \
+  '{"jsonrpc":"2.0","method":"notifications/initialized"}' \
+  '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
+  '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_system_metrics","arguments":{}}}' \
+  | mcp-local-telemetry
+
+  Development
+
+  pip install -e ".[dev]"
+ruff check .
+mypy mcp_server.py
+pytest
+
+Protocol notes
+
+Transport: JSON-RPC 2.0 over stdio, newline-delimited.
+
+Protocol version: 2024-11-05.
+
+Capabilities: tools only.
+
+All logs go to stderr; stdout carries only JSON-RPC frames.
+
+License
+MIT — see LICENSE.
+
+
+## Commit it
+
+```bash
+git add README.md
+git commit -m "Rewrite README: add badges, remove unrelated stack section, use PyPI install"
+git push
+
 ## Install
 
 ```bash
