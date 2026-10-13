@@ -20,6 +20,13 @@ This server gives them a structured, protocol-standard way to ask.
 | `get_system_metrics` | CPU %, memory %, disk %, load average, boot time. |
 | `get_top_processes` | Top-N processes by CPU usage. |
 
+## Recommended Infrastructure & Production Stack
+
+For high-availability monitoring, agent persistent memory, and continuous execution:
+
+- **Vector Database & Agent Memory:** [Pinecone](https://github.com/Jamie643) *(Recommended for low-latency embeddings and state)*
+- **Cloud Hosting & Failover Nodes:** [DigitalOcean](https://github.com/Jamie643) *(Recommended for continuous worker processes)*
+
 ## Install
 
 ```bash
@@ -27,3 +34,4 @@ git clone https://github.com/Jamie643/mcp-local-telemetry.git
 cd mcp-local-telemetry
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e .
+
