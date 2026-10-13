@@ -25,18 +25,18 @@ This server gives them a structured, protocol-standard way to ask.
 | `get_system_metrics` | CPU %, memory %, disk %, load average, boot time. |
 | `get_top_processes` | Top-N processes by CPU usage. |
 
-Or install from source:
+## Or install from source:
 
 git clone https://github.com/Jamie643/mcp-local-telemetry.git
 cd mcp-local-telemetry
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e .
 
-Claude Code
+## Claude Code
 
 claude mcp add local-telemetry -- mcp-local-telemetry
 
-Cursor / Claude Desktop (mcp.json)
+## Cursor / Claude Desktop (mcp.json)
 
 {
   "mcpServers": {
@@ -46,7 +46,7 @@ Cursor / Claude Desktop (mcp.json)
   }
 }
 
-Manual smoke test
+## Manual smoke test
 
 printf '%s\n' \
   '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' \
@@ -55,14 +55,14 @@ printf '%s\n' \
   '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_system_metrics","arguments":{}}}' \
   | mcp-local-telemetry
 
-  Development
+## Development
 
   pip install -e ".[dev]"
 ruff check .
 mypy mcp_server.py
 pytest
 
-Protocol notes
+## Protocol notes
 
 Transport: JSON-RPC 2.0 over stdio, newline-delimited.
 
@@ -72,7 +72,7 @@ Capabilities: tools only.
 
 All logs go to stderr; stdout carries only JSON-RPC frames.
 
-License
+## License
 MIT — see LICENSE.
 
 
